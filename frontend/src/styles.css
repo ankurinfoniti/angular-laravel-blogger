@@ -92,6 +92,12 @@ h1 {
 .rb-box {
   margin-bottom: 10px;
 }
+.recent-post h3 {
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  font-size: 1.5rem;
+}
 .recent-post a:hover {
   text-decoration: none;
 }
@@ -101,6 +107,12 @@ h1 {
 
 .categories {
   margin-top: 20px;
+}
+.categories h3 {
+  background-color: #000;
+  color: #fff;
+  padding: 5px;
+  font-size: 1.5rem;
 }
 .categories ul {
   padding: 0;

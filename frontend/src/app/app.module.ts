@@ -19,7 +19,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     BannerComponent,
     PageNotFoundComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, BlogpostModule, CmspageModule],
+  imports: [BrowserModule, BlogpostModule, CmspageModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
