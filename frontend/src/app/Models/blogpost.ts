@@ -1,4 +1,4 @@
-export class Blogpost {
+export interface Blogpost {
   id: number;
   title: string;
   short_desc: string;
