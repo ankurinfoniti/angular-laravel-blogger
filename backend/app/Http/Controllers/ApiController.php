@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Blog;
 use App\Model\Category;
+use App\Model\Page;
 use App\Model\User;
 
 class ApiController extends Controller
@@ -55,5 +56,12 @@ class ApiController extends Controller
             ->first();
 
         return $blog;
+    }
+
+    public function page($slug)
+    {
+        $page = Page::select('id', 'title', 'description')->where('slug', $slug)->get();
+
+        return $page;
     }
 }
