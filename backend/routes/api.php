@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CoursesController;
+use App\Http\Controllers\ApiController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,3 +18,9 @@ use App\Http\Controllers\CoursesController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/blogs', [ApiController::class, 'blogs']);
+Route::get('/featured-blogs', [ApiController::class, 'featuredBlogs']);
+Route::get('/recent-blogs', [ApiController::class, 'recentBlogs']);
+Route::get('/categories', [ApiController::class, 'categories']);
+Route::get('/blog/{id}', [ApiController::class, 'blog']);
