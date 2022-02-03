@@ -25,10 +25,10 @@ export class BlogpostListComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle(this.title);
 
-    this.blogpostService.getBlogs().subscribe(
-      (data) => (this.blogs = data),
-      (error) => (this.error = error)
-    );
+    this.blogpostService.getBlogs().subscribe({
+      next: (data) => (this.blogs = data),
+      error: (error) => (this.error = error),
+    });
   }
 
   shortDescription(value: string) {
