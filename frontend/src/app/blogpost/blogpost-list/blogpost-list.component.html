@@ -17,5 +17,9 @@
         </div>
       </div>
     </div>
+    <div class="service-error" *ngIf="error">
+      <h3>{{ error.errorTitle }}</h3>
+      <p>{{ error.errorDesc }}</p>
+    </div>
   </div>
 </section>

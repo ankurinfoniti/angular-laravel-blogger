@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { BlogpostService } from '../blogpost.service';
 import { GeneralService } from '../../Services/general.service';
 import { Blogpost } from '../../Models/blogpost';
+import { ApiError } from '../../Models/apierror';
 
 @Component({
   selector: 'app-blogpost-list',
@@ -13,7 +14,7 @@ import { Blogpost } from '../../Models/blogpost';
 export class BlogpostListComponent implements OnInit {
   title = 'Blogs';
   blogs!: Array<Blogpost>;
-  error: {} = {};
+  error!: ApiError;
 
   constructor(
     private titleService: Title,

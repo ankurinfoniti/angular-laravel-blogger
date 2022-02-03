@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { BlogpostService } from '../blogpost.service';
 import { GeneralService } from '../../Services/general.service';
 import { Blogpost } from '../../Models/blogpost';
+import { ApiError } from '../../Models/apierror';
 
 @Component({
   selector: 'app-blogpost-featured',
@@ -11,7 +12,7 @@ import { Blogpost } from '../../Models/blogpost';
 })
 export class BlogpostFeaturedComponent implements OnInit {
   blogs!: Array<Blogpost>;
-  error: {} = {};
+  error!: ApiError;
 
   constructor(
     private blogpostService: BlogpostService,

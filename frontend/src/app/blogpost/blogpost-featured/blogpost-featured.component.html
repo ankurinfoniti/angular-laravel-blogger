@@ -1,6 +1,6 @@
 <section class="featured-blog mtb-40">
   <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="blogs">
       <div class="col-md-4" *ngFor="let blog of blogs">
         <div class="blog-box">
           <img [src]="blog.image" alt="{{ blog.title }}" />
@@ -15,6 +15,10 @@
           </a>
         </div>
       </div>
+    </div>
+    <div class="service-error" *ngIf="error">
+      <h3>{{ error.errorTitle }}</h3>
+      <p>{{ error.errorDesc }}</p>
     </div>
   </div>
 </section>
