@@ -21,4 +21,15 @@ class Blog extends Model
     {
         return $this->hasOne('App\Model\Category', 'id', 'category_id');
     }
+
+    /**
+     * Get the image value with path.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getImageAttribute($value)
+    {
+        return url('images/' . $value);
+    }
 }

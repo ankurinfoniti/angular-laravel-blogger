@@ -22,10 +22,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BlogpostModule,
     CmspageModule,
     AppRoutingModule,
-    HttpClientModule,
   ],
   providers: [Title],
   bootstrap: [AppComponent],
