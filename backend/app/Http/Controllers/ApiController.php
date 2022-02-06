@@ -60,7 +60,7 @@ class ApiController extends Controller
 
     public function page($slug)
     {
-        $page = Page::select('id', 'title', 'description')->where('slug', $slug)->get();
+        $page = Page::select('id', 'title', 'description')->where('slug', $slug)->first();
 
         return $page;
     }

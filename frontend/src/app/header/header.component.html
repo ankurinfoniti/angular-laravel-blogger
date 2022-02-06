@@ -17,22 +17,39 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a routerLink="/" routerLinkActive="active" class="nav-link">Home</a>
+          <a
+            routerLink="/"
+            routerLinkActive="active"
+            (click)="setTitle('Home')"
+            class="nav-link"
+          >
+            Home
+          </a>
         </li>
         <li class="nav-item">
-          <a routerLink="/page/about" routerLinkActive="active" class="nav-link"
-            >About</a
+          <a
+            routerLink="/page/about"
+            routerLinkActive="active"
+            (click)="setTitle('About')"
+            class="nav-link"
           >
+            About
+          </a>
         </li>
         <li class="nav-item">
-          <a routerLink="/contact" routerLinkActive="active" class="nav-link"
-            >Contact</a
+          <a
+            routerLink="/contact"
+            routerLinkActive="active"
+            (click)="setTitle('Contact')"
+            class="nav-link"
           >
+            Contact
+          </a>
         </li>
         <li class="nav-item">
-          <a routerLink="/blog" routerLinkActive="active" class="nav-link"
-            >Blog</a
-          >
+          <a routerLink="/blog" routerLinkActive="active" class="nav-link">
+            Blog
+          </a>
         </li>
       </ul>
     </div>
