@@ -7,6 +7,7 @@ use App\Model\Blog;
 use App\Model\Category;
 use App\Model\Page;
 use App\Model\User;
+use App\Model\Contact;
 
 class ApiController extends Controller
 {
@@ -63,5 +64,20 @@ class ApiController extends Controller
         $page = Page::select('id', 'title', 'description')->where('slug', $slug)->first();
 
         return $page;
+    }
+
+    public function contact(Request $request)
+    {
+        $contactData = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+            'created_at' => date('Y-m-d H:i:s', time())
+        );
+
+        $response = Contact::insert($contactData);
+
+        return ['id' => $response];
     }
 }

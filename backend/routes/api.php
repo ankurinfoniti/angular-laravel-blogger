@@ -25,3 +25,4 @@ Route::get('/recent-blogs', [ApiController::class, 'recentBlogs']);
 Route::get('/categories', [ApiController::class, 'categories']);
 Route::get('/blog/{id}', [ApiController::class, 'blog']);
 Route::get('/page/{slug}', [ApiController::class, 'page']);
+Route::post('/contact', [ApiController::class, 'contact']);

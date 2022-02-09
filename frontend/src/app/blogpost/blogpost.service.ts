@@ -11,8 +11,6 @@ import { Category } from '../Models/category';
   providedIn: 'root',
 })
 export class BlogpostService {
-  errorData: {} | undefined;
-
   constructor(private http: HttpClient) {}
 
   getBlogs() {
@@ -58,10 +56,10 @@ export class BlogpostService {
     }
 
     // return an observable with a user-facing error message
-    this.errorData = {
+    const errorData = {
       errorTitle: 'Oops! Request for document failed',
       errorDesc: 'Something bad happened. Please try again later.',
     };
-    return throwError(() => this.errorData);
+    return throwError(() => errorData);
   }
 }
