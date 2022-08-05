@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BlogpostModule } from './blogpost/blogpost.module';
 import { CmspageModule } from './cmspage/cmspage.module';
+import { AuthModule } from './auth/auth.module';
+import { AdminModule } from './admin/admin.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -25,9 +29,15 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HttpClientModule,
     BlogpostModule,
     CmspageModule,
+    AuthModule,
+    AdminModule,
     AppRoutingModule,
   ],
-  providers: [Title],
+  providers: [
+    Title,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+AuthInterceptor;

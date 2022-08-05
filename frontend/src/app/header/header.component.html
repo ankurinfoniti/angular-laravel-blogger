@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-blue">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">
+    <a class="navbar-brand" routerLink="/" (click)="setPageTitle('Blogger')">
       <img src="assets/images/logo.png" alt="Angular Project" />
     </a>
     <button
@@ -20,36 +20,53 @@
           <a
             routerLink="/"
             routerLinkActive="active"
-            (click)="setTitle('Home')"
             class="nav-link"
+            (click)="setPageTitle('Blogger')"
+            >Home</a
           >
-            Home
-          </a>
         </li>
         <li class="nav-item">
           <a
             routerLink="/page/about"
             routerLinkActive="active"
-            (click)="setTitle('About')"
             class="nav-link"
+            (click)="setPageTitle('About')"
+            >About</a
           >
-            About
-          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            routerLink="/page/services"
+            routerLinkActive="active"
+            class="nav-link"
+            (click)="setPageTitle('Services')"
+            >Services</a
+          >
         </li>
         <li class="nav-item">
           <a
             routerLink="/contact"
             routerLinkActive="active"
-            (click)="setTitle('Contact')"
             class="nav-link"
+            (click)="setPageTitle('Contact')"
+            >Contact</a
           >
-            Contact
-          </a>
         </li>
         <li class="nav-item">
-          <a routerLink="/blog" routerLinkActive="active" class="nav-link">
-            Blog
-          </a>
+          <a routerLink="/blog" routerLinkActive="active" class="nav-link"
+            >Blog</a
+          >
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a routerLink="/login" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a routerLink="/admin" class="nav-link">Admin Dashboard</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a routerLink="/login" class="nav-link">Logout</a>
         </li>
       </ul>
     </div>

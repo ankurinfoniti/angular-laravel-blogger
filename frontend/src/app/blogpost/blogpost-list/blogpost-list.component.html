@@ -10,7 +10,7 @@
             by <span>{{ blog.user.name }}</span> on
             <span>{{ blog.created_at | date: "mediumDate" }}</span>
           </p>
-          <p>{{ generalService.getShortDescription(blog.description) }}</p>
+          <p>{{ shortDescription(blog.description) }}</p>
           <a [routerLink]="['/blog', blog.id]" class="btn btn-danger">
             Read more...
           </a>

@@ -16,7 +16,7 @@ export class BlogpostFeaturedComponent implements OnInit {
 
   constructor(
     private blogpostService: BlogpostService,
-    public generalService: GeneralService
+    private generalService: GeneralService
   ) {}
 
   ngOnInit(): void {
@@ -24,5 +24,9 @@ export class BlogpostFeaturedComponent implements OnInit {
       next: (data) => (this.blogs = data),
       error: (error) => (this.error = error),
     });
+  }
+
+  shortDescription(value: string) {
+    return this.generalService.getShortDescription(value);
   }
 }

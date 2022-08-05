@@ -1,41 +1,49 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-  HttpBackend,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { environment as env } from 'src/environments/environment';
-import { Page } from '../Models/page';
-import { Contact } from '../Models/contact';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CmspageService {
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-  };
+export class AuthService {
+  redirectUrl: string = '';
 
-  private httpClient: HttpClient;
+  constructor(private http: HttpClient) {}
 
-  constructor(handler: HttpBackend) {
-    this.httpClient = new HttpClient(handler);
+  login(username: string, password: string) {
+    return this.http
+      .post<any>(`${env.BASE_URL}/login`, { username, password })
+      .pipe(
+        map((user) => {
+          if (user && user.token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
 
-  getPage(slug: string) {
-    return this.httpClient
-      .get<Page>(`${env.BASE_URL}/page/${slug}`)
-      .pipe(catchError(this.handleError));
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('currentUser')) {
+      return true;
+    }
+    return false;
   }
 
-  contactForm(formData: Contact) {
-    return this.httpClient
-      .post<Contact>(`${env.BASE_URL}/contact`, formData, this.httpOptions)
-      .pipe(catchError(this.handleError));
+  getAuthorizationToken() {
+    const user = localStorage.getItem('currentUser');
+    if (user?.length) {
+      const currentUser = JSON.parse(user);
+      return currentUser.token;
+    }
+    return null;
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -55,7 +63,6 @@ export class CmspageService {
       errorTitle: 'Oops! Request for document failed',
       errorDesc: 'Something bad happened. Please try again later.',
     };
-
     return throwError(() => errorData);
   }
 }

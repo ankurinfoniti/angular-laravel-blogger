@@ -19,7 +19,7 @@ export class BlogpostListComponent implements OnInit {
   constructor(
     private titleService: Title,
     private blogpostService: BlogpostService,
-    public generalService: GeneralService
+    private generalService: GeneralService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +32,6 @@ export class BlogpostListComponent implements OnInit {
   }
 
   shortDescription(value: string) {
-    return value.slice(0, 50);
+    return this.generalService.getShortDescription(value);
   }
 }

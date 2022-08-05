@@ -8,6 +8,7 @@ use App\Model\Category;
 use App\Model\Page;
 use App\Model\User;
 use App\Model\Contact;
+use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
 {
@@ -79,5 +80,26 @@ class ApiController extends Controller
         $response = Contact::insert($contactData);
 
         return ['id' => $response];
+    }
+
+    public function login(Request $request)
+    {
+        $username = $request->username;
+        $password = $request->password;
+
+        $user = User::where('username', $username)->first();
+
+        if ($user && Hash::check($password, $user->password)) {
+            $response = array(
+                'user_id' => $user->id,
+                'username' => $user->username,
+                'name' => $user->name,
+                'token' => $user->token
+            );
+        } else {
+            $response = [];
+        }
+
+        return $response;
     }
 }
