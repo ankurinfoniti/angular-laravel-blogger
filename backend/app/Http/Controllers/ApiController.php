@@ -9,6 +9,7 @@ use App\Model\Page;
 use App\Model\User;
 use App\Model\Contact;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class ApiController extends Controller
 {
@@ -98,6 +99,162 @@ class ApiController extends Controller
             );
         } else {
             $response = [];
+        }
+
+        return $response;
+    }
+
+    public function adminBlogs(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $posts = [];
+
+        if ($user) {
+            $posts = Blog::select('id', 'title', 'image', 'created_at')->orderBy('id', 'DESC')->get();
+        }
+
+        return $posts;
+    }
+
+    public function adminBlog(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $post = null;
+
+        if ($user) {
+            $post = Blog::select('id', 'title', 'description', 'image', 'is_featured', 'is_active', 'created_at')
+                ->where('id', $id)->first();
+        }
+
+        return $post;
+    }
+
+    public function createBlog(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $response = [];
+
+        if ($user) {
+            $title = $request->title;
+            $description = $request->description;
+            $is_featured = $request->is_featured;
+            $is_active = $request->is_active;
+
+            $filename = null;
+
+            if ($request->hasFile('image')) {
+                $file = $request->image->getClientOriginalName();
+                $filename = preg_replace('/\s+/', '_', strtolower(pathinfo($file, PATHINFO_FILENAME)))
+                    . time() . '.' . $request->image->getClientOriginalExtension();
+
+                $request->image->move(public_path('/images'), $filename);
+            }
+
+            $blog = new Blog();
+
+            $blog->title = $title;
+            $blog->user_id = $user->id;
+            $blog->category_id = 1;
+            $blog->description = $description;
+            $blog->image = $filename;
+            $blog->is_featured = $is_featured;
+            $blog->is_active = $is_active;
+
+            if ($blog->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record inserted successfully';
+                $response['uploadError'] = false;
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record insertion failed';
+                $response['uploadError'] = false;
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Authorize access. Please try with valid credential.';
+            $response['uploadError'] = false;
+        }
+
+        return $response;
+    }
+
+    public function updateBlog(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $title = $request->title;
+            $description = $request->description;
+            $is_featured = $request->is_featured;
+            $is_active = $request->is_active;
+
+            $filename = null;
+
+            if ($request->hasFile('image')) {
+                $file = $request->image->getClientOriginalName();
+                $filename = preg_replace('/\s+/', '_', strtolower(pathinfo($file, PATHINFO_FILENAME)))
+                    . time() . '.' . $request->image->getClientOriginalExtension();
+
+                $request->image->move(public_path('/images'), $filename);
+            }
+
+            $blog = Blog::find($id);
+
+            $blog->title = $title;
+            $blog->user_id = $user->id;
+            $blog->category_id = 1;
+            $blog->description = $description;
+            $blog->is_featured = $is_featured;
+            $blog->is_active = $is_active;
+
+            if ($filename) {
+                $blog->image = $filename;
+            }
+
+            if ($blog->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record updated successfully';
+                $response['uploadError'] = false;
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record updation failed';
+                $response['uploadError'] = false;
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Authorize access. Please try with valid credential.';
+            $response['uploadError'] = false;
+        }
+
+        return $response;
+    }
+
+    public function deleteBlog(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $blog = Blog::find($id);
+
+            if ($blog->image) {
+                File::delete(public_path() . parse_url($blog->image)['path']);
+            }
+
+            if ($blog->delete()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record deleted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record deletion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Authorize access. Please try with valid credential.';
         }
 
         return $response;

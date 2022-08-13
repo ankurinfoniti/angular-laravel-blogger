@@ -1,40 +1,44 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-  HttpBackend,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment as env } from 'src/environments/environment';
-import { Page } from '../models/page';
-import { Contact } from '../models/contact';
+import { Blog } from '../models/blog';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CmspageService {
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'application/json' }),
-  };
+export class BlogService {
+  constructor(private http: HttpClient) {}
 
-  private httpClient: HttpClient;
-
-  constructor(handler: HttpBackend) {
-    this.httpClient = new HttpClient(handler);
-  }
-
-  getPage(slug: string) {
-    return this.httpClient
-      .get<Page>(`${env.BASE_URL}/page/${slug}`)
+  getBlogs() {
+    return this.http
+      .get<Array<Blog>>(`${env.BASE_URL}/admin-blogs`)
       .pipe(catchError(this.handleError));
   }
 
-  contactForm(formData: Contact) {
-    return this.httpClient
-      .post<Contact>(`${env.BASE_URL}/contact`, formData, this.httpOptions)
+  getBlog(id: number) {
+    return this.http
+      .get<Blog>(`${env.BASE_URL}/admin-blog/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  createBlog(blog: any) {
+    return this.http
+      .post<any>(`${env.BASE_URL}/create-blog`, blog)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateBlog(blog: any, id: number) {
+    return this.http
+      .post<any>(`${env.BASE_URL}/update-blog/${id}`, blog)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteBlog(id: number) {
+    return this.http
+      .delete<any>(`${env.BASE_URL}/delete-blog/${id}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -55,7 +59,6 @@ export class CmspageService {
       errorTitle: 'Oops! Request for document failed',
       errorDesc: 'Something bad happened. Please try again later.',
     };
-
     return throwError(() => errorData);
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BlogpostService } from '../blogpost.service';
-import { Blogpost } from '../../Models/blogpost';
-import { ApiError } from 'src/app/Models/apierror';
+import { Blogpost } from '../../models/blogpost';
+import { ApiError } from 'src/app/models/apierror';
 
 @Component({
   selector: 'app-blogpost-recent',

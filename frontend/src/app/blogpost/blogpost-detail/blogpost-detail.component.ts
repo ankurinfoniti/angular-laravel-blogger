@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { BlogpostService } from '../blogpost.service';
-import { Blogpost } from '../../Models/blogpost';
-import { Category } from '../../Models/category';
-import { ApiError } from '../../Models/apierror';
+import { Blogpost } from '../../models/blogpost';
+import { Category } from '../../models/category';
+import { ApiError } from '../../models/apierror';
 
 @Component({
   selector: 'app-blogpost-detail',

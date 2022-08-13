@@ -8,8 +8,8 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment as env } from 'src/environments/environment';
-import { Blogpost } from '../Models/blogpost';
-import { Category } from '../Models/category';
+import { Blogpost } from '../models/blogpost';
+import { Category } from '../models/category';
 
 @Injectable({
   providedIn: 'root',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BlogpostService } from '../blogpost.service';
-import { GeneralService } from '../../Services/general.service';
-import { Blogpost } from '../../Models/blogpost';
-import { ApiError } from '../../Models/apierror';
+import { GeneralService } from '../../services/general.service';
+import { Blogpost } from '../../models/blogpost';
+import { ApiError } from '../../models/apierror';
 
 @Component({
   selector: 'app-blogpost-featured',

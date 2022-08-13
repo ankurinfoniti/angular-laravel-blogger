@@ -30,6 +30,9 @@ class Blog extends Model
      */
     public function getImageAttribute($value)
     {
-        return url('images/' . $value);
+        if ($value) {
+            return url('images/' . $value);
+        }
+        return '';
     }
 }

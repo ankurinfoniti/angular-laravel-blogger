@@ -4,8 +4,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import { CmspageService } from '../cmspage.service';
-import { Page } from '../../Models/page';
-import { ApiError } from '../../Models/apierror';
+import { Page } from '../../models/page';
+import { ApiError } from '../../models/apierror';
 
 @Component({
   selector: 'app-page',

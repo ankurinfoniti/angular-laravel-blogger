@@ -27,3 +27,8 @@ Route::get('/blog/{id}', [ApiController::class, 'blog']);
 Route::get('/page/{slug}', [ApiController::class, 'page']);
 Route::post('/contact', [ApiController::class, 'contact']);
 Route::post('/login', [ApiController::class, 'login']);
+Route::get('/admin-blogs', [ApiController::class, 'adminBlogs']);
+Route::get('/admin-blog/{id}', [ApiController::class, 'adminBlog']);
+Route::post('/create-blog', [ApiController::class, 'createBlog']);
+Route::post('/update-blog/{id}', [ApiController::class, 'updateBlog']);
+Route::delete('/delete-blog/{id}', [ApiController::class, 'deleteBlog']);

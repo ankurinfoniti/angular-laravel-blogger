@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CmspageService } from '../cmspage.service';
-import { Contact } from '../../Models/contact';
-import { ApiError } from '../../Models/apierror';
+import { Contact } from '../../models/contact';
+import { ApiError } from '../../models/apierror';
 
 @Component({
   selector: 'app-contact-form',
