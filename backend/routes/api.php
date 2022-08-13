@@ -32,3 +32,9 @@ Route::get('/admin-blog/{id}', [ApiController::class, 'adminBlog']);
 Route::post('/create-blog', [ApiController::class, 'createBlog']);
 Route::post('/update-blog/{id}', [ApiController::class, 'updateBlog']);
 Route::delete('/delete-blog/{id}', [ApiController::class, 'deleteBlog']);
+
+Route::get('/admin-categories', [ApiController::class, 'adminCategories']);
+Route::get('/admin-category/{id}', [ApiController::class, 'adminCategory']);
+Route::post('/create-category', [ApiController::class, 'createCategory']);
+Route::post('/update-category/{id}', [ApiController::class, 'updateCategory']);
+Route::delete('/delete-category/{id}', [ApiController::class, 'deleteCategory']);

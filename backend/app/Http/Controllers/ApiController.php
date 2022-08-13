@@ -174,7 +174,7 @@ class ApiController extends Controller
             }
         } else {
             $response['status'] = 'error';
-            $response['message'] = 'Authorize access. Please try with valid credential.';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
             $response['uploadError'] = false;
         }
 
@@ -226,7 +226,7 @@ class ApiController extends Controller
             }
         } else {
             $response['status'] = 'error';
-            $response['message'] = 'Authorize access. Please try with valid credential.';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
             $response['uploadError'] = false;
         }
 
@@ -254,7 +254,110 @@ class ApiController extends Controller
             }
         } else {
             $response['status'] = 'error';
-            $response['message'] = 'Authorize access. Please try with valid credential.';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function adminCategories(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $categories = [];
+
+        if ($user) {
+            $categories = Category::select('id', 'category_name', 'created_at')->orderBy('id', 'DESC')->get();
+        }
+
+        return $categories;
+    }
+
+    public function adminCategory(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $category = null;
+
+        if ($user) {
+            $category = Category::select('id', 'category_name', 'created_at')->where('id', $id)->first();
+        }
+
+        return $category;
+    }
+
+    public function createCategory(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $response = [];
+
+        if ($user) {
+            $category = new Category();
+
+            $category->category_name = $request->name;
+
+            if ($category->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record inserted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record insertion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function updateCategory(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $category = Category::find($id);
+
+            $category->category_name = $request->name;
+
+            if ($category->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record updated successfully';
+                $response['uploadError'] = false;
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record updation failed';
+                $response['uploadError'] = false;
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+            $response['uploadError'] = false;
+        }
+
+        return $response;
+    }
+
+    public function deleteCategory(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $category = Category::find($id);
+
+            if ($category->delete()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record deleted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record deletion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
         }
 
         return $response;

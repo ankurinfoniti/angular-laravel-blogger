@@ -23,8 +23,8 @@
     <th>Created At</th>
     <th>Action</th>
   </tr>
-  <tr *ngFor="let blog of blogs">
-    <td>{{ blog.id }}</td>
+  <tr *ngFor="let blog of blogs; let i = index">
+    <td>{{ i + 1 }}</td>
     <td><img src="{{ blog.image }}" *ngIf="blog.image" /></td>
     <td>{{ blog.title }}</td>
     <td>{{ blog.created_at | date: "mediumDate" }}</td>

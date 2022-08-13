@@ -9,6 +9,7 @@ import { ManageBlogsComponent } from './manage-blogs/manage-blogs.component';
 import { ManageCategoriesComponent } from './manage-categories/manage-categories.component';
 import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { BlogFormComponent } from './blog-form/blog-form.component';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BlogFormComponent } from './blog-form/blog-form.component';
     ManageCategoriesComponent,
     ManagePagesComponent,
     BlogFormComponent,
+    CategoryFormComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, AdminRoutingModule],
 })

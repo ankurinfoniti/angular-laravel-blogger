@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiError } from 'src/app/models/apierror';
 
+import { ApiError } from 'src/app/models/apierror';
 import { BlogService } from '../../services/blog.service';
 
 @Component({
@@ -72,7 +72,6 @@ export class BlogFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
     const formData = new FormData();
     formData.append('title', this.blogForm.get('title')!.value);
     formData.append('description', this.blogForm.get('description')!.value);
@@ -92,8 +91,10 @@ export class BlogFormComponent implements OnInit {
               this.error = res.message;
             }
           }
+          this.submitted = true;
         },
         error: (error: ApiError) => {
+          this.submitted = true;
           this.error = error;
           console.log(this.error, error);
         },
@@ -109,8 +110,10 @@ export class BlogFormComponent implements OnInit {
               this.error.errorDesc = res.message;
             }
           }
+          this.submitted = true;
         },
         error: (error: ApiError) => {
+          this.submitted = true;
           this.error = error;
           console.log(this.error, error);
         },
