@@ -1,1 +1,46 @@
-<p>manage-pages works!</p>
+<div class="dash-header">
+  <div class="dash-title">
+    <h1>{{ title }}</h1>
+  </div>
+  <div class="dash-nav">
+    <a [routerLink]="['/admin/pages/create']" class="btn btn-success">
+      Add Page
+    </a>
+  </div>
+</div>
+<div *ngIf="success" class="alert alert-success">
+  {{ success }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<table class="table table-bordered table-striped" *ngIf="!error">
+  <tr>
+    <th>#ID</th>
+    <th>title</th>
+    <th>Status</th>
+    <th>Created At</th>
+    <th>Action</th>
+  </tr>
+  <tr *ngFor="let page of pages; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ page.title }}</td>
+    <td>{{ page.is_active ? "Active" : "Inactive" }}</td>
+    <td>{{ page.created_at | date: "mediumDate" }}</td>
+    <td class="action">
+      <a
+        [routerLink]="['/admin/pages/edit', page.id]"
+        class="btn btn-info btn-sm"
+      >
+        Edit
+      </a>
+      &nbsp;
+      <a (click)="onDelete(page.id)" class="btn btn-danger btn-sm"> Delete </a>
+    </td>
+  </tr>
+</table>
+<div class="service-error" *ngIf="error">
+  <h1>{{ error.errorTitle }}</h1>
+  <h3>{{ error.errorDesc }}</h3>
+</div>

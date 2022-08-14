@@ -1,0 +1,87 @@
+<div class="dash-header">
+  <div class="dash-title">
+    <h1>{{ pageTitle }}</h1>
+  </div>
+</div>
+<div class="blog-form">
+  <form [formGroup]="pageForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+    <div class="form-group form-row">
+      <label class="col-md-3">Title <span class="required">*</span></label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="title"
+          class="form-control"
+          placeholder="Title"
+          required
+        />
+        <div
+          *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+          class="error"
+        >
+          <div *ngIf="title?.errors">Title is required.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-md-3">Is Active</label>
+      <div class="col-md-9">
+        <input type="radio" formControlName="is_active" [value]="1" /> Yes
+        <input type="radio" formControlName="is_active" [value]="0" /> No
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-md-3">
+        Description <span class="required">*</span>
+      </label>
+      <div class="col-md-9">
+        <!-- <textarea
+          formControlName="description"
+          rows="5"
+          class="form-control"
+          placeholder="Description"
+          required
+        ></textarea> -->
+        <div class="editor">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+          </ngx-editor-menu>
+          <ngx-editor [editor]="editor" formControlName="description">
+          </ngx-editor>
+        </div>
+        <div
+          *ngIf="
+            description?.invalid && (description?.dirty || description?.touched)
+          "
+          class="error"
+        >
+          <div *ngIf="description?.errors">Description is required.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-md-3"></label>
+      <div class="col-md-9">
+        <input type="hidden" formControlName="id" />
+        <button
+          type="submit"
+          [disabled]="!pageForm.valid"
+          class="btn btn-primary"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="service-error" *ngIf="error">
+    <h1>{{ error.errorTitle }}</h1>
+    <h3>{{ error.errorDesc }}</h3>
+  </div>
+  <div [hidden]="!submitted" class="contact-message">
+    <div *ngIf="!error" class="contact-success">
+      <h2 class="success">Success!</h2>
+      <h4>Page has been successfully submitted.</h4>
+      <br />
+      <button (click)="gotoHome()" class="btn btn-info">Go to Home</button>
+    </div>
+  </div>
+</div>

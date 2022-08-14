@@ -10,6 +10,7 @@ use App\Model\User;
 use App\Model\Contact;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
@@ -325,16 +326,13 @@ class ApiController extends Controller
             if ($category->save()) {
                 $response['status'] = 'success';
                 $response['message'] = 'Record updated successfully';
-                $response['uploadError'] = false;
             } else {
                 $response['status'] = 'error';
                 $response['message'] = 'Record updation failed';
-                $response['uploadError'] = false;
             }
         } else {
             $response['status'] = 'error';
             $response['message'] = 'Unauthorize access. Please try with valid credential.';
-            $response['uploadError'] = false;
         }
 
         return $response;
@@ -349,6 +347,113 @@ class ApiController extends Controller
             $category = Category::find($id);
 
             if ($category->delete()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record deleted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record deletion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function adminPages(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $pages = [];
+
+        if ($user) {
+            $pages = Page::select('id', 'title', 'slug', 'description', 'is_active', 'created_at')->orderBy('id', 'DESC')->get();
+        }
+
+        return $pages;
+    }
+
+    public function adminPage(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $page = null;
+
+        if ($user) {
+            $page = Page::select('id', 'title', 'slug', 'description', 'is_active', 'created_at')->where('id', $id)->first();
+        }
+
+        return $page;
+    }
+
+    public function createPage(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $response = [];
+
+        if ($user) {
+            $page = new Page();
+
+            $page->title = $request->title;
+            $page->slug = Str::slug($request->title);
+            $page->description = $request->description;
+            $page->is_active = $request->is_active;
+
+            if ($page->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record inserted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record insertion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function updatePage(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $page = Page::find($id);
+
+            $page->title = $request->title;
+            $page->slug = Str::slug($request->title);
+            $page->description = $request->description;
+            $page->is_active = $request->is_active;
+
+            if ($page->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record updated successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record updation failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+            $response['uploadError'] = false;
+        }
+
+        return $response;
+    }
+
+    public function deletePage(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $page = Page::find($id);
+
+            if ($page->delete()) {
                 $response['status'] = 'success';
                 $response['message'] = 'Record deleted successfully';
             } else {

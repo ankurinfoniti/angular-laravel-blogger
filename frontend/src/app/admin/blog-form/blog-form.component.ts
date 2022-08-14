@@ -88,7 +88,8 @@ export class BlogFormComponent implements OnInit {
             if (res.uploadError) {
               this.uploadError = res.message;
             } else {
-              this.error = res.message;
+              this.error.errorTitle = 'OOPS! REQUEST FOR DOCUMENT FAILED';
+              this.error.errorDesc = res.message;
             }
           }
           this.submitted = true;

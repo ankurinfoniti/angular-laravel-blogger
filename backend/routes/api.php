@@ -38,3 +38,9 @@ Route::get('/admin-category/{id}', [ApiController::class, 'adminCategory']);
 Route::post('/create-category', [ApiController::class, 'createCategory']);
 Route::post('/update-category/{id}', [ApiController::class, 'updateCategory']);
 Route::delete('/delete-category/{id}', [ApiController::class, 'deleteCategory']);
+
+Route::get('/admin-pages', [ApiController::class, 'adminPages']);
+Route::get('/admin-page/{id}', [ApiController::class, 'adminPage']);
+Route::post('/create-page', [ApiController::class, 'createPage']);
+Route::post('/update-page/{id}', [ApiController::class, 'updatePage']);
+Route::delete('/delete-page/{id}', [ApiController::class, 'deletePage']);
