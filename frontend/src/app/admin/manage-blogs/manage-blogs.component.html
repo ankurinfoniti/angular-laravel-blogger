@@ -51,6 +51,7 @@
 <pagination-controls
   [responsive]="true"
   (pageChange)="pageChangeEvent($event)"
+  *ngIf="!error"
 ></pagination-controls>
 
 <div class="service-error" *ngIf="error">
