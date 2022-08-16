@@ -4,7 +4,7 @@
     <div class="row" *ngIf="blogs">
       <div class="col-md-4" *ngFor="let blog of blogs">
         <div class="blog-box">
-          <img [src]="blog.image" alt="{{ blog.title }}" />
+          <img [src]="blog.image" *ngIf="blog.image" alt="{{ blog.title }}" />
           <h3>{{ blog.title }}</h3>
           <p>
             by <span>{{ blog.user.name }}</span> on
