@@ -3,7 +3,6 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
-  HttpBackend,
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -20,11 +19,7 @@ export class CmspageService {
     headers: new HttpHeaders({ 'Content-type': 'application/json' }),
   };
 
-  private httpClient: HttpClient;
-
-  constructor(handler: HttpBackend) {
-    this.httpClient = new HttpClient(handler);
-  }
+  constructor(private httpClient: HttpClient) {}
 
   getPage(slug: string) {
     return this.httpClient

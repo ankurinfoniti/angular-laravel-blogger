@@ -3,6 +3,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BlogpostModule } from './blogpost/blogpost.module';
@@ -15,6 +16,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BannerComponent } from './banner/banner.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FooterComponent,
     BannerComponent,
     PageNotFoundComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   providers: [
     Title,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

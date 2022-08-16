@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpBackend,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -15,11 +11,7 @@ import { Category } from '../models/category';
   providedIn: 'root',
 })
 export class BlogpostService {
-  private http: HttpClient;
-
-  constructor(handler: HttpBackend) {
-    this.http = new HttpClient(handler);
-  }
+  constructor(private http: HttpClient) {}
 
   getBlogs() {
     return this.http

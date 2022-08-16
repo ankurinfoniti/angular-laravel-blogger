@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxPaginationModule } from 'ngx-pagination';
+
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin/admin.component';
@@ -57,6 +60,9 @@ import { PageFormComponent } from './page-form/page-form.component';
         background_color: 'Background Color',
       },
     }),
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })
 export class AdminModule {}
