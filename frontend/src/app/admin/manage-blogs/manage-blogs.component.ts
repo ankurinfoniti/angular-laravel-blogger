@@ -14,17 +14,34 @@ export class ManageBlogsComponent implements OnInit {
   blogs!: Array<Blog>;
   error!: ApiError;
   success = '';
+  page: number = 1;
+  total: number = 0;
+  perPage: number = 10;
+  count: number = 0;
 
   constructor(private blogService: BlogService) {}
 
   ngOnInit(): void {
-    this.blogService.getBlogs().subscribe({
-      next: (data) => (this.blogs = data),
+    this.getBlogs();
+  }
+
+  getBlogs() {
+    this.blogService.getBlogs(this.page, this.perPage).subscribe({
+      next: (data: any) => {
+        this.blogs = data.posts;
+        this.total = data.total;
+        this.count = (this.page - 1) * this.perPage;
+      },
       error: (error: ApiError) => {
         this.error = error;
         console.log(this.error, error);
       },
     });
+  }
+
+  pageChangeEvent(event: number) {
+    this.page = event;
+    this.getBlogs();
   }
 
   onDelete(id: number) {

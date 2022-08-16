@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { NgxEditorModule } from 'ngx-editor';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin/admin.component';
@@ -29,6 +30,7 @@ import { PageFormComponent } from './page-form/page-form.component';
     CommonModule,
     ReactiveFormsModule,
     AdminRoutingModule,
+    NgxPaginationModule,
     NgxEditorModule.forRoot({
       locals: {
         // menu

@@ -23,8 +23,15 @@
     <th>Created At</th>
     <th>Action</th>
   </tr>
-  <tr *ngFor="let blog of blogs; let i = index">
-    <td>{{ i + 1 }}</td>
+  <tr
+    *ngFor="
+      let blog of blogs
+        | paginate
+          : { itemsPerPage: perPage, currentPage: page, totalItems: total };
+      let i = index
+    "
+  >
+    <td>{{ count + i + 1 }}</td>
     <td><img src="{{ blog.image }}" *ngIf="blog.image" /></td>
     <td>{{ blog.title }}</td>
     <td>{{ blog.created_at | date: "mediumDate" }}</td>
@@ -32,13 +39,20 @@
       <a
         [routerLink]="['/admin/blogs/edit', blog.id]"
         class="btn btn-info btn-sm"
-        >Edit</a
       >
+        Edit
+      </a>
       &nbsp;
       <a (click)="onDelete(blog.id)" class="btn btn-danger btn-sm">Delete</a>
     </td>
   </tr>
 </table>
+
+<pagination-controls
+  [responsive]="true"
+  (pageChange)="pageChangeEvent($event)"
+></pagination-controls>
+
 <div class="service-error" *ngIf="error">
   <h1>{{ error.errorTitle }}</h1>
   <h3>{{ error.errorDesc }}</h3>

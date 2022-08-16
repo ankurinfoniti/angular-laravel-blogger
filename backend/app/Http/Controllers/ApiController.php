@@ -110,12 +110,22 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
         $posts = [];
+        $total = 0;
 
         if ($user) {
-            $posts = Blog::select('id', 'title', 'image', 'created_at')->orderBy('id', 'DESC')->get();
+            $page = $request->page;
+            $limit = $request->limit;
+
+            $posts = Blog::select('id', 'title', 'image', 'created_at')
+                ->limit($limit)
+                ->offset($limit * ($page - 1))
+                ->orderBy('id', 'DESC')
+                ->get();
+
+            $total = Blog::select('id', 'title', 'image', 'created_at')->count();
         }
 
-        return $posts;
+        return ['posts' => $posts, 'total' => $total];
     }
 
     public function adminBlog(Request $request, $id)
