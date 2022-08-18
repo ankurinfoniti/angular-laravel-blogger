@@ -37,6 +37,7 @@ h1 {
 }
 .blog-box img {
   width: 100%;
+  min-height: 250px;
 }
 .mtb-40 {
   margin: 40px 0;

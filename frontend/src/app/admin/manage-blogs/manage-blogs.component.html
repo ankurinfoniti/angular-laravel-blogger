@@ -32,7 +32,13 @@
     "
   >
     <td>{{ count + i + 1 }}</td>
-    <td><img src="{{ blog.image }}" *ngIf="blog.image" /></td>
+    <td>
+      <img
+        [src]="
+          blog.image ? blog.image : 'assets/images/no-image-placeholder.png'
+        "
+      />
+    </td>
     <td>{{ blog.title }}</td>
     <td>{{ blog.created_at | date: "mediumDate" }}</td>
     <td class="action">

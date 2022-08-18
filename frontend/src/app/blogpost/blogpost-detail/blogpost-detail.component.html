@@ -11,7 +11,14 @@
             </p>
           </div>
           <div class="detail-img">
-            <img [src]="blog.image" *ngIf="blog.image" alt="{{ blog.title }}" />
+            <img
+              [src]="
+                blog.image
+                  ? blog.image
+                  : 'assets/images/no-image-placeholder.png'
+              "
+              alt="{{ blog.title }}"
+            />
           </div>
           <div class="blog-desc">{{ blog.description }}</div>
         </div>
