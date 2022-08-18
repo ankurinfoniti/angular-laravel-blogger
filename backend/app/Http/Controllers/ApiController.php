@@ -30,6 +30,8 @@ class ApiController extends Controller
             ->with('category:id,category_name')
             ->where('is_active', 1)
             ->where('is_featured', 1)
+            ->orderBy('id', 'desc')
+            ->limit(9)
             ->get();
 
         return $blogs;
