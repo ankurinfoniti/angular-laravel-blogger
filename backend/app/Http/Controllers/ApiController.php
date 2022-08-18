@@ -137,7 +137,7 @@ class ApiController extends Controller
         $post = null;
 
         if ($user) {
-            $post = Blog::select('id', 'title', 'description', 'image', 'is_featured', 'is_active', 'created_at')
+            $post = Blog::select('id', 'title', 'category_id', 'description', 'image', 'is_featured', 'is_active', 'created_at')
                 ->where('id', $id)->first();
         }
 
@@ -152,6 +152,7 @@ class ApiController extends Controller
 
         if ($user) {
             $title = $request->title;
+            $category = $request->category;
             $description = $request->description;
             $is_featured = $request->is_featured;
             $is_active = $request->is_active;
@@ -170,7 +171,7 @@ class ApiController extends Controller
 
             $blog->title = $title;
             $blog->user_id = $user->id;
-            $blog->category_id = 1;
+            $blog->category_id = $category;
             $blog->description = $description;
             $blog->image = $filename;
             $blog->is_featured = $is_featured;
@@ -201,6 +202,7 @@ class ApiController extends Controller
 
         if ($user) {
             $title = $request->title;
+            $category = $request->category;
             $description = $request->description;
             $is_featured = $request->is_featured;
             $is_active = $request->is_active;
@@ -219,7 +221,7 @@ class ApiController extends Controller
 
             $blog->title = $title;
             $blog->user_id = $user->id;
-            $blog->category_id = 1;
+            $blog->category_id = $category;
             $blog->description = $description;
             $blog->is_featured = $is_featured;
             $blog->is_active = $is_active;
