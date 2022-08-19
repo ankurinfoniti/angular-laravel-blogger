@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -13,9 +17,13 @@ import { Category } from '../models/category';
 export class BlogpostService {
   constructor(private http: HttpClient) {}
 
-  getBlogs() {
+  getBlogs(page: number, limit: number) {
+    const httpParams = new HttpParams().set('page', page).set('limit', limit);
+
     return this.http
-      .get<Array<Blogpost>>(`${env.BASE_URL}/blogs`)
+      .get<Array<Blogpost>>(`${env.BASE_URL}/blogs`, {
+        params: httpParams,
+      })
       .pipe(catchError(this.handleError));
   }
 

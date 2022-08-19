@@ -15,6 +15,9 @@ export class BlogpostListComponent implements OnInit {
   title = 'Blogs';
   blogs!: Array<Blogpost>;
   error!: ApiError;
+  page: number = 1;
+  perPage: number = 10;
+  total!: number;
 
   constructor(
     private titleService: Title,
@@ -24,9 +27,24 @@ export class BlogpostListComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle(this.title);
+    this.loadBlog();
+  }
 
-    this.blogpostService.getBlogs().subscribe({
-      next: (data) => (this.blogs = data),
+  loadBlog() {
+    this.blogpostService.getBlogs(this.page, this.perPage).subscribe({
+      next: (data: any) => {
+        this.total = data.total;
+
+        if (data['blog'] && this.page == 1) {
+          this.blogs = data['blog'];
+        }
+
+        if (data['blog'] && this.page > 1) {
+          this.blogs.push(...data['blog']);
+        }
+
+        this.page++;
+      },
       error: (error) => (this.error = error),
     });
   }

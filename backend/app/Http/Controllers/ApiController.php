@@ -14,14 +14,22 @@ use Illuminate\Support\Str;
 
 class ApiController extends Controller
 {
-    public function blogs()
+    public function blogs(Request $request)
     {
+        $page = $request->page;
+        $limit = $request->limit;
+
         $blogs = Blog::with('user:id,name')
             ->with('category:id,category_name')
+            ->limit($limit)
+            ->offset($limit * ($page - 1))
+            ->orderBy('id', 'desc')
             ->where('is_active', 1)
             ->get();
 
-        return $blogs;
+        $total = Blog::where('is_active', 1)->count();
+
+        return ['blog' => $blogs, 'total' => $total];
     }
 
     public function featuredBlogs()

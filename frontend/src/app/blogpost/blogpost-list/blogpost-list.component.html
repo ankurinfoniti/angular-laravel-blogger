@@ -21,6 +21,10 @@
           </a>
         </div>
       </div>
+
+      <div class="col-md-12 text-center" *ngIf="total != blogs.length">
+        <button class="btn btn-primary" (click)="loadBlog()">Load More</button>
+      </div>
     </div>
     <div class="service-error" *ngIf="error">
       <h1>{{ error.errorTitle }}</h1>

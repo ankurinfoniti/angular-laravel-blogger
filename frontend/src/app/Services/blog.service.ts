@@ -17,7 +17,6 @@ export class BlogService {
   constructor(private http: HttpClient) {}
 
   getBlogs(page: number, limit: number) {
-    let url = '${env.BASE_URL}/admin-blogs';
     const httpParams = new HttpParams().set('page', page).set('limit', limit);
 
     return this.http
