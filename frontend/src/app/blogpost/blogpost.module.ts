@@ -7,6 +7,7 @@ import { BlogpostListComponent } from './blogpost-list/blogpost-list.component';
 import { BlogpostDetailComponent } from './blogpost-detail/blogpost-detail.component';
 import { BlogpostRecentComponent } from './blogpost-recent/blogpost-recent.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { CategoriesComponent } from './categories/categories.component';
     BlogpostRecentComponent,
     CategoriesComponent,
   ],
-  imports: [CommonModule, BlogpostRoutingModule],
+  imports: [CommonModule, SharedModule, BlogpostRoutingModule],
   exports: [BlogpostFeaturedComponent],
 })
 export class BlogpostModule {}
