@@ -12,6 +12,10 @@ const routes: Routes = [
     path: 'blog/:slug',
     component: BlogpostDetailComponent,
   },
+  {
+    path: 'category/:slug',
+    component: BlogpostListComponent,
+  },
 ];
 
 @NgModule({

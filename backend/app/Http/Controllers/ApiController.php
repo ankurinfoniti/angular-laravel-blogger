@@ -18,6 +18,7 @@ class ApiController extends Controller
     {
         $page = $request->page;
         $limit = $request->limit;
+        $categorySlug = $request->category;
 
         $blogs = Blog::with('user:id,name')
             ->with('category:id,category_name')
@@ -25,9 +26,18 @@ class ApiController extends Controller
             ->offset($limit * ($page - 1))
             ->orderBy('id', 'desc')
             ->where('is_active', 1)
+            ->when($categorySlug, function ($query) use ($categorySlug) {
+                $query->whereHas('category', function ($query) use ($categorySlug) {
+                    $query->where('slug', $categorySlug);
+                });
+            })
             ->get();
 
-        $total = Blog::where('is_active', 1)->count();
+        $total = Blog::when($categorySlug, function ($query) use ($categorySlug) {
+            $query->whereHas('category', function ($query) use ($categorySlug) {
+                $query->where('slug', $categorySlug);
+            });
+        })->where('is_active', 1)->count();
 
         return ['blog' => $blogs, 'total' => $total];
     }
@@ -59,7 +69,7 @@ class ApiController extends Controller
 
     public function categories()
     {
-        return Category::select('id', 'category_name')->get();
+        return Category::select('id', 'category_name', 'slug')->get();
     }
 
     public function blog($slug)
@@ -348,6 +358,7 @@ class ApiController extends Controller
             $category = new Category();
 
             $category->category_name = $request->name;
+            $category->slug = Str::slug($request->name);
 
             if ($category->save()) {
                 $response['status'] = 'success';

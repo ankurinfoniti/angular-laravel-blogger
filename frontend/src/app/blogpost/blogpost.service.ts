@@ -17,8 +17,11 @@ import { Category } from '../models/category';
 export class BlogpostService {
   constructor(private http: HttpClient) {}
 
-  getBlogs(page: number, limit: number) {
-    const httpParams = new HttpParams().set('page', page).set('limit', limit);
+  getBlogs(page: number, limit: number, category: string) {
+    const httpParams = new HttpParams()
+      .set('page', page)
+      .set('limit', limit)
+      .set('category', category);
 
     return this.http
       .get<Array<Blogpost>>(`${env.BASE_URL}/blogs`, {

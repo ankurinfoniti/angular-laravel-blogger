@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
+import { switchMap } from 'rxjs';
 
 import { BlogpostService } from '../blogpost.service';
 import { GeneralService } from '../../services/general.service';
@@ -14,12 +17,14 @@ import { ApiError } from '../../models/apierror';
 export class BlogpostListComponent implements OnInit {
   title = 'Blogs';
   blogs!: Array<Blogpost>;
+  category = '';
   error!: ApiError;
   page: number = 1;
   perPage: number = 10;
   total!: number;
 
   constructor(
+    private route: ActivatedRoute,
     private titleService: Title,
     private blogpostService: BlogpostService,
     private generalService: GeneralService
@@ -27,11 +32,13 @@ export class BlogpostListComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle(this.title);
-    this.loadBlog();
+    this.route.params.subscribe((data: any) => {
+      this.loadBlog(data.slug);
+    });
   }
 
-  loadBlog() {
-    this.blogpostService.getBlogs(this.page, this.perPage).subscribe({
+  loadBlog(category = '') {
+    this.blogpostService.getBlogs(this.page, this.perPage, category).subscribe({
       next: (data: any) => {
         this.total = data.total;
 

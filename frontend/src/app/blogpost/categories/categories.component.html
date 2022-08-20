@@ -2,7 +2,9 @@
   <h3>Categories</h3>
   <ul>
     <li *ngFor="let category of categories">
-      {{ category.category_name }}
+      <a [routerLink]="['/category', category.slug]">
+        {{ category.category_name }}
+      </a>
     </li>
   </ul>
 </div>
