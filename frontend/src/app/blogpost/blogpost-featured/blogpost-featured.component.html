@@ -14,8 +14,8 @@
             by <span>{{ blog.user.name }}</span> on
             <span>{{ blog.created_at | date: "mediumDate" }}</span>
           </p>
-          <p>{{ shortDescription(blog.description) }}</p>
-          <a [routerLink]="['/blog', blog.id]" class="btn btn-danger">
+          <p [innerHTML]="shortDescription(blog.description)"></p>
+          <a [routerLink]="['/blog', blog.slug]" class="btn btn-danger">
             Read more...
           </a>
         </div>

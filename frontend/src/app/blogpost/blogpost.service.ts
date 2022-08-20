@@ -33,9 +33,9 @@ export class BlogpostService {
       .pipe(catchError(this.handleError));
   }
 
-  getBlog(id: number) {
+  getBlog(slug: string) {
     return this.http
-      .get<Blogpost>(`${env.BASE_URL}/blog/${id}`)
+      .get<Blogpost>(`${env.BASE_URL}/blog/${slug}`)
       .pipe(catchError(this.handleError));
   }
 

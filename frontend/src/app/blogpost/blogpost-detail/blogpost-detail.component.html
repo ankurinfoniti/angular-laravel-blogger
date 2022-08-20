@@ -20,7 +20,7 @@
               alt="{{ blog.title }}"
             />
           </div>
-          <div class="blog-desc">{{ blog.description }}</div>
+          <div class="blog-desc" [innerHTML]="blog.description"></div>
         </div>
         <div class="blog-left" *ngIf="notFound">
           <app-page-not-found></app-page-not-found>

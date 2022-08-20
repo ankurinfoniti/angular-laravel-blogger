@@ -28,8 +28,8 @@ export class BlogpostDetailComponent implements OnInit {
     this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) => {
-          let id = params.get('id');
-          return this.blogpostService.getBlog(id ? +id : 0);
+          let slug = params.get('slug');
+          return this.blogpostService.getBlog(slug ? slug : '');
         })
       )
       .subscribe({

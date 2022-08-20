@@ -1,7 +1,7 @@
 <div class="right-widget recent-post">
   <h3>Recent Blogs</h3>
   <div *ngFor="let blog of blogs">
-    <a [routerLink]="['/blog', blog.id]">
+    <a [routerLink]="['/blog', blog.slug]">
       <div class="rb-box">
         <div class="rb-box-img">
           <img

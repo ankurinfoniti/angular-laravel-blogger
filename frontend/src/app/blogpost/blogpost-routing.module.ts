@@ -5,11 +5,11 @@ import { BlogpostListComponent } from './blogpost-list/blogpost-list.component';
 
 const routes: Routes = [
   {
-    path: 'blog',
+    path: 'blogs',
     component: BlogpostListComponent,
   },
   {
-    path: 'blog/:id',
+    path: 'blog/:slug',
     component: BlogpostDetailComponent,
   },
 ];

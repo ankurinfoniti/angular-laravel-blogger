@@ -62,11 +62,11 @@ class ApiController extends Controller
         return Category::select('id', 'category_name')->get();
     }
 
-    public function blog($id)
+    public function blog($slug)
     {
         $blog = Blog::with('user:id,name')
             ->with('category:id,category_name')
-            ->where('id', $id)
+            ->where('slug', $slug)
             ->first();
 
         return $blog;
@@ -160,6 +160,7 @@ class ApiController extends Controller
 
         if ($user) {
             $title = $request->title;
+            $slug = $this->createSlug($request->title);
             $category = $request->category;
             $description = $request->description;
             $is_featured = $request->is_featured;
@@ -178,6 +179,7 @@ class ApiController extends Controller
             $blog = new Blog();
 
             $blog->title = $title;
+            $blog->slug = $slug;
             $blog->user_id = $user->id;
             $blog->category_id = $category;
             $blog->description = $description;
@@ -201,6 +203,33 @@ class ApiController extends Controller
         }
 
         return $response;
+    }
+
+    public function createSlug($title, $id = 0)
+    {
+        $slug = Str::slug($title);
+        $allSlugs = $this->getRelatedSlugs($slug, $id);
+        if (!$allSlugs->contains('slug', $slug)) {
+            return $slug;
+        }
+
+        $i = 1;
+        $is_contain = true;
+        do {
+            $newSlug = $slug . '-' . $i;
+            if (!$allSlugs->contains('slug', $newSlug)) {
+                $is_contain = false;
+                return $newSlug;
+            }
+            $i++;
+        } while ($is_contain);
+    }
+
+    protected function getRelatedSlugs($slug, $id = 0)
+    {
+        return Blog::select('slug')->where('slug', 'like', $slug . '%')
+            ->where('id', '<>', $id)
+            ->get();
     }
 
     public function updateBlog(Request $request, $id)
