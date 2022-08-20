@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  Validators,
+  FormGroup,
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import { Editor, Toolbar } from 'ngx-editor';
 
 import { ApiError } from 'src/app/models/apierror';
 import { Category } from 'src/app/models/category';
@@ -12,7 +19,7 @@ import { CategoryService } from '../../services/category.service';
   templateUrl: './blog-form.component.html',
   styleUrls: ['./blog-form.component.css'],
 })
-export class BlogFormComponent implements OnInit {
+export class BlogFormComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Create Blog';
   error!: ApiError;
   uploadError: string = '';
@@ -21,6 +28,18 @@ export class BlogFormComponent implements OnInit {
   categories!: Array<Category>;
 
   blogForm!: FormGroup;
+
+  editor!: Editor;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +50,7 @@ export class BlogFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.editor = new Editor();
     let id = 0;
     this.route.params.subscribe((params) => {
       id = +params['id'];
@@ -60,11 +80,21 @@ export class BlogFormComponent implements OnInit {
       id: [''],
       title: ['', Validators.required],
       category: [''],
-      description: ['', Validators.required],
+      description: ['', [Validators.required, this.noWhitespaceValidator]],
       is_featured: ['0'],
       is_active: ['1'],
       image: [''],
     });
+  }
+
+  private noWhitespaceValidator(control: FormControl) {
+    let value = control.value;
+    // test for empty field
+    const isWhitespace =
+      value.replace(/<(.|\n)*?>/g, '').trim().length === 0 &&
+      !value.includes('<img');
+    const isValid = !isWhitespace;
+    return isValid ? null : { whitespace: true };
   }
 
   onSelectedFile(event: Event) {
@@ -136,5 +166,9 @@ export class BlogFormComponent implements OnInit {
 
   gotoHome() {
     this.router.navigate(['/admin/blogs']);
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 }
