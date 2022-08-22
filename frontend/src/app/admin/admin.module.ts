@@ -17,6 +17,7 @@ import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { BlogFormComponent } from './blog-form/blog-form.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { PageFormComponent } from './page-form/page-form.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { PageFormComponent } from './page-form/page-form.component';
     BlogFormComponent,
     CategoryFormComponent,
     PageFormComponent,
+    ManageUsersComponent,
   ],
   imports: [
     CommonModule,

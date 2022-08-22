@@ -109,7 +109,7 @@ class ApiController extends Controller
         $username = $request->username;
         $password = $request->password;
 
-        $user = User::where('username', $username)->first();
+        $user = User::where('username', $username)->where('is_active', 1)->first();
 
         if ($user && Hash::check($password, $user->password)) {
             $response = array(
@@ -516,6 +516,119 @@ class ApiController extends Controller
             $page = Page::find($id);
 
             if ($page->delete()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record deleted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record deletion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function checkUserName(Request $request)
+    {
+        $username = $request->username;
+
+        $count = User::where('username', $username)->count();
+
+        if ($count) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function createUser(Request $request)
+    {
+        $page = new User();
+
+        $page->username = $request->username;
+        $page->name = $request->name;
+        $page->password = Hash::make($request->password);
+        $page->token = md5(rand());
+        $page->role = 2;
+        $page->is_active = 0;
+        $response = [];
+
+        if ($page->save()) {
+            $response['status'] = 'success';
+            $response['message'] = 'User registered successfully';
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'User registration failed';
+        }
+
+        return $response;
+    }
+
+    public function adminUsers(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $users = [];
+        $total = 0;
+
+        if ($user) {
+            $page = $request->page;
+            $limit = $request->limit;
+
+            $users = User::select('id', 'name', 'username', 'role', 'is_active', 'created_at')
+                ->where('id', '!=', $user->id)
+                ->limit($limit)
+                ->offset($limit * ($page - 1))
+                ->orderBy('id', 'DESC')
+                ->get();
+
+            $total = User::select('id')
+                ->where('id', '!=', $user->id)
+                ->count();
+        }
+
+        return ['users' => $users, 'total' => $total];
+    }
+
+    public function activateUser(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $id = $request->id;
+            $status = $request->status;
+
+            $user = User::find($id);
+
+            $user->is_active = $status;
+
+            if ($user->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record updated successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record updation failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function deleteUser(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user) {
+            $user = User::find($id);
+
+            if ($user->delete()) {
                 $response['status'] = 'success';
                 $response['message'] = 'Record deleted successfully';
             } else {

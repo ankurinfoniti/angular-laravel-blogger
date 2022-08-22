@@ -1,0 +1,57 @@
+<div class="dash-header">
+  <div class="dash-title">
+    <h1>{{ title }}</h1>
+  </div>
+</div>
+<div *ngIf="success && !error" class="alert alert-success">
+  {{ success }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<table class="table table-bordered table-striped" *ngIf="!error">
+  <tr>
+    <th>#ID</th>
+    <th>Name</th>
+    <th>Username</th>
+    <th>Status</th>
+    <th>Created At</th>
+    <th>Action</th>
+  </tr>
+  <tr
+    *ngFor="
+      let user of users
+        | paginate
+          : { itemsPerPage: perPage, currentPage: page, totalItems: total };
+      let i = index
+    "
+  >
+    <td>{{ count + i + 1 }}</td>
+    <td>{{ user.name }}</td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.is_active ? "Active" : "Inactive" }}</td>
+    <td>{{ user.created_at | date: "mediumDate" }}</td>
+    <td class="action">
+      <a
+        (click)="onAction(user.id, user.is_active ? 0 : 1)"
+        class="btn btn-info btn-sm"
+      >
+        {{ user.is_active ? "Make Inctive" : "Make Active" }}
+      </a>
+      &nbsp;
+      <a (click)="onDelete(user.id)" class="btn btn-danger btn-sm"> Delete </a>
+    </td>
+  </tr>
+</table>
+
+<pagination-controls
+  [responsive]="true"
+  (pageChange)="pageChangeEvent($event)"
+  *ngIf="!error"
+></pagination-controls>
+
+<div class="service-error" *ngIf="error">
+  <h1>{{ error.errorTitle }}</h1>
+  <h3>{{ error.errorDesc }}</h3>
+</div>

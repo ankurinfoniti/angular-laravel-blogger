@@ -1,0 +1,89 @@
+<section class="cmspage mtb-40">
+  <div class="container">
+    <div class="page-desc" [hidden]="submitted">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <h1>Registration Form</h1>
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control"
+                placeholder="Name"
+                required
+              />
+              <div
+                *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                class="error"
+              >
+                <div *ngIf="name?.errors">Name is required.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                formControlName="username"
+                class="form-control"
+                placeholder="Username"
+                required
+                (keydown.space)="$event.preventDefault()"
+              />
+              <div
+                *ngIf="
+                  username?.invalid && (username?.dirty || username?.touched)
+                "
+                class="error"
+              >
+                <div *ngIf="username?.errors?.['required']">
+                  Username is required.
+                </div>
+                <div *ngIf="username?.errors?.['uniqueUserName']">
+                  Username already taken.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                formControlName="password"
+                class="form-control"
+                placeholder="Password"
+                required
+                (keydown.space)="$event.preventDefault()"
+              />
+              <div
+                *ngIf="
+                  password?.invalid && (password?.dirty || password?.touched)
+                "
+                class="error"
+              >
+                <div *ngIf="password?.errors">Password is required.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button
+                [disabled]="!registrationForm.valid"
+                class="btn btn-success"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="service-error" *ngIf="error">
+      <h1>{{ error.errorTitle }}</h1>
+      <h3>{{ error.errorDesc }}</h3>
+    </div>
+    <div [hidden]="!submitted" class="contact-message">
+      <div class="contact-success" *ngIf="!error">
+        <h2 class="success">Success!</h2>
+        <h4>User data has been successfully submitted.</h4>
+        <br />
+        <button (click)="gotoHome()" class="btn btn-info">Go to Home</button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -44,3 +44,9 @@ Route::get('/admin-page/{id}', [ApiController::class, 'adminPage']);
 Route::post('/create-page', [ApiController::class, 'createPage']);
 Route::post('/update-page/{id}', [ApiController::class, 'updatePage']);
 Route::delete('/delete-page/{id}', [ApiController::class, 'deletePage']);
+
+Route::post('/check-username', [ApiController::class, 'checkUserName']);
+Route::post('/create-user', [ApiController::class, 'createUser']);
+Route::get('/admin-users', [ApiController::class, 'adminUsers']);
+Route::post('/activate-user', [ApiController::class, 'activateUser']);
+Route::delete('/delete-user/{id}', [ApiController::class, 'deleteUser']);
