@@ -33,6 +33,15 @@ export class AuthService {
     return false;
   }
 
+  getRole(): number | null {
+    const user = localStorage.getItem('currentUser');
+    if (user?.length) {
+      const currentUser = JSON.parse(user);
+      return currentUser.role;
+    }
+    return null;
+  }
+
   getAuthorizationToken() {
     const user = localStorage.getItem('currentUser');
     if (user?.length) {
@@ -40,6 +49,20 @@ export class AuthService {
       return currentUser.token;
     }
     return null;
+  }
+
+  redirectTo() {
+    let role = this.getRole();
+
+    if (role == 1) {
+      return '/admin';
+    }
+
+    if (role == 2) {
+      return '/user';
+    }
+
+    return '';
   }
 
   logout() {

@@ -9,6 +9,7 @@ import { BlogpostModule } from './blogpost/blogpost.module';
 import { CmspageModule } from './cmspage/cmspage.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
+import { UserModule } from './user/user.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -31,6 +32,7 @@ import { LoaderComponent } from './loader/loader.component';
     CmspageModule,
     AuthModule,
     AdminModule,
+    UserModule,
     AppRoutingModule,
   ],
   providers: [
