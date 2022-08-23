@@ -116,7 +116,8 @@ class ApiController extends Controller
                 'user_id' => $user->id,
                 'username' => $user->username,
                 'name' => $user->name,
-                'token' => $user->token
+                'token' => $user->token,
+                'role' => $user->role
             );
         } else {
             $response = [];
