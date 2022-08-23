@@ -59,18 +59,25 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a routerLink="/login" class="nav-link">Login</a>
-        </li>
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a routerLink="/register" class="nav-link">Register</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn">
-          <a routerLink="/admin" class="nav-link">Admin Dashboard</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn">
-          <a routerLink="/login" class="nav-link">Logout</a>
-        </li>
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <a routerLink="/login" class="nav-link">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <a routerLink="/register" class="nav-link">Register</a>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="isLoggedIn">
+          <li class="nav-item" *ngIf="userRole == 1">
+            <a routerLink="/admin" class="nav-link">Admin Dashboard</a>
+          </li>
+          <li class="nav-item" *ngIf="userRole == 2">
+            <a routerLink="/user" class="nav-link">User Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/login" class="nav-link">Logout</a>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>

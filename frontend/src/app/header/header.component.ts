@@ -17,6 +17,10 @@ export class HeaderComponent implements OnInit {
     return this.authService.isLoggedIn();
   }
 
+  get userRole() {
+    return this.authService.getRole();
+  }
+
   setPageTitle(title: string) {
     this.titleService.setTitle(title);
   }
