@@ -11,8 +11,10 @@ import { Editor, Toolbar } from 'ngx-editor';
 
 import { ApiError } from 'src/app/models/apierror';
 import { Category } from 'src/app/models/category';
+import { User } from 'src/app/models/user';
 import { BlogService } from '../../services/blog.service';
 import { CategoryService } from '../../services/category.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-blog-form',
@@ -26,6 +28,7 @@ export class BlogFormComponent implements OnInit, OnDestroy {
   imagePath: string = '';
   submitted = false;
   categories!: Array<Category>;
+  loginUser!: User;
 
   blogForm!: FormGroup;
 
@@ -45,11 +48,13 @@ export class BlogFormComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private blogService: BlogService,
     private categoryService: CategoryService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.loginUser = this.authService.getLoggedInUser();
     this.editor = new Editor();
     let id = 0;
     this.route.params.subscribe((params) => {
@@ -64,6 +69,9 @@ export class BlogFormComponent implements OnInit, OnDestroy {
     if (id) {
       this.pageTitle = 'Edit Blog';
       this.blogService.getBlog(id).subscribe((res) => {
+        if (!res) {
+          return this.gotoHome();
+        }
         this.blogForm.patchValue({
           title: res.title,
           category: res.category_id,
@@ -165,7 +173,12 @@ export class BlogFormComponent implements OnInit, OnDestroy {
   }
 
   gotoHome() {
-    this.router.navigate(['/admin/blogs']);
+    console.log(this.loginUser);
+    if (this.loginUser.role == 1) {
+      this.router.navigate(['/admin/blogs']);
+    } else {
+      this.router.navigate(['/user/blogs']);
+    }
   }
 
   ngOnDestroy(): void {

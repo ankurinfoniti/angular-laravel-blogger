@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BlogService } from '../../services/blog.service';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Blog } from '../../models/blog';
 import { ApiError } from 'src/app/models/apierror';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-manage-blogs',
@@ -18,10 +20,15 @@ export class ManageBlogsComponent implements OnInit {
   total: number = 0;
   perPage: number = 10;
   count: number = 0;
+  loginUser!: User;
 
-  constructor(private blogService: BlogService) {}
+  constructor(
+    private blogService: BlogService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.loginUser = this.authService.getLoggedInUser();
     this.getBlogs();
   }
 

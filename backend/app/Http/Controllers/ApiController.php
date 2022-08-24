@@ -136,14 +136,23 @@ class ApiController extends Controller
         if ($user) {
             $page = $request->page;
             $limit = $request->limit;
+            $role = $user->role;
+            $userId = $user->id;
 
-            $posts = Blog::with('user:id,name')
+            $query = Blog::with('user:id,name')
                 ->limit($limit)
                 ->offset($limit * ($page - 1))
-                ->orderBy('id', 'DESC')
-                ->get();
+                ->orderBy('id', 'DESC');
 
-            $total = Blog::select('id', 'title', 'image', 'created_at')->count();
+            $totalQuery = Blog::select('id', 'title', 'image', 'created_at');
+
+            if ($role != 1) {
+                $query->where('user_id', $userId);
+                $totalQuery->where('user_id', $userId);
+            }
+
+            $posts = $query->get();
+            $total = $totalQuery->count();
         }
 
         return ['posts' => $posts, 'total' => $total];
@@ -156,8 +165,15 @@ class ApiController extends Controller
         $post = null;
 
         if ($user) {
-            $post = Blog::select('id', 'title', 'category_id', 'description', 'image', 'is_featured', 'is_active', 'created_at')
-                ->where('id', $id)->first();
+            $role = $user->role;
+
+            $query = Blog::select('id', 'title', 'category_id', 'description', 'image', 'is_featured', 'is_active', 'created_at')
+                ->where('id', $id);
+
+            if ($role != 1) {
+                $query->where('user_id', $user->id);
+            }
+            $post = $query->first();
         }
 
         return $post;
@@ -170,12 +186,13 @@ class ApiController extends Controller
         $response = [];
 
         if ($user) {
+            $role = $user->role;
             $title = $request->title;
             $slug = $this->createSlug($request->title);
             $category = $request->category;
             $description = $request->description;
             $is_featured = $request->is_featured;
-            $is_active = $request->is_active;
+            $is_active = $role == 1 ? $request->is_active : 0;
 
             $filename = null;
 
@@ -249,11 +266,11 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
 
         if ($user) {
+            $role = $user->role;
             $title = $request->title;
             $category = $request->category;
             $description = $request->description;
             $is_featured = $request->is_featured;
-            $is_active = $request->is_active;
 
             $filename = null;
 
@@ -272,7 +289,7 @@ class ApiController extends Controller
             $blog->category_id = $category;
             $blog->description = $description;
             $blog->is_featured = $is_featured;
-            $blog->is_active = $is_active;
+            $blog->is_active = $role == 1 ? $request->is_active : $blog->is_active;
 
             if ($filename) {
                 $blog->image = $filename;
@@ -301,7 +318,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $blog = Blog::find($id);
 
             if ($blog->image) {
@@ -329,7 +346,7 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
         $categories = [];
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $categories = Category::select('id', 'category_name', 'created_at')->orderBy('id', 'DESC')->get();
         }
 
@@ -342,7 +359,7 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
         $category = null;
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $category = Category::select('id', 'category_name', 'created_at')->where('id', $id)->first();
         }
 
@@ -355,7 +372,7 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
         $response = [];
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $category = new Category();
 
             $category->category_name = $request->name;
@@ -381,7 +398,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $category = Category::find($id);
 
             $category->category_name = $request->name;
@@ -406,7 +423,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $category = Category::find($id);
 
             if ($category->delete()) {
@@ -430,7 +447,7 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
         $pages = [];
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $pages = Page::select('id', 'title', 'slug', 'description', 'is_active', 'created_at')->orderBy('id', 'DESC')->get();
         }
 
@@ -443,7 +460,7 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
         $page = null;
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $page = Page::select('id', 'title', 'slug', 'description', 'is_active', 'created_at')->where('id', $id)->first();
         }
 
@@ -456,7 +473,7 @@ class ApiController extends Controller
         $user = User::where('token', $token)->first();
         $response = [];
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $page = new Page();
 
             $page->title = $request->title;
@@ -484,7 +501,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $page = Page::find($id);
 
             $page->title = $request->title;
@@ -513,7 +530,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $page = Page::find($id);
 
             if ($page->delete()) {
@@ -574,7 +591,7 @@ class ApiController extends Controller
         $users = [];
         $total = 0;
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $page = $request->page;
             $limit = $request->limit;
 
@@ -598,7 +615,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $id = $request->id;
             $status = $request->status;
 
@@ -626,7 +643,7 @@ class ApiController extends Controller
         $token = $request->header('Authorization');
         $user = User::where('token', $token)->first();
 
-        if ($user) {
+        if ($user && $user->role === 1) {
             $user = User::find($id);
 
             if ($user->delete()) {

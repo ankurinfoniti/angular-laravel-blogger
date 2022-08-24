@@ -3,9 +3,7 @@
     <h1>{{ title }}</h1>
   </div>
   <div class="dash-nav">
-    <a [routerLink]="['/admin/blogs/create']" class="btn btn-success"
-      >Add Post</a
-    >
+    <a [routerLink]="['../blogs/create']" class="btn btn-success">Add Post</a>
   </div>
 </div>
 <div *ngIf="success" class="alert alert-success">
@@ -46,15 +44,20 @@
     <td>{{ blog.created_at | date: "mediumDate" }}</td>
     <td>{{ getStatus(blog) }}</td>
     <td class="action">
-      <a
-        [routerLink]="['/admin/blogs/edit', blog.id]"
-        class="btn btn-info btn-sm"
-      >
+      <a [routerLink]="['../blogs/edit', blog.id]" class="btn btn-info btn-sm">
         Edit
       </a>
       &nbsp;
-      <a (click)="onDelete(blog.id)" class="btn btn-danger btn-sm">Delete</a>
+      <a
+        (click)="onDelete(blog.id)"
+        *ngIf="loginUser.role == 1"
+        class="btn btn-danger btn-sm"
+        >Delete</a
+      >
     </td>
+  </tr>
+  <tr class="text-center" *ngIf="total === 0">
+    <td colspan="100%">No blog found</td>
   </tr>
 </table>
 

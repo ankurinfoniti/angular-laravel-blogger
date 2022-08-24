@@ -16,6 +16,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BannerComponent } from './banner/banner.component';
 import { LoaderComponent } from './loader/loader.component';
+import { AccessDeniedComponent } from './access-denied/access-denied.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LoaderComponent } from './loader/loader.component';
     FooterComponent,
     BannerComponent,
     LoaderComponent,
+    AccessDeniedComponent,
   ],
   imports: [
     BrowserModule,

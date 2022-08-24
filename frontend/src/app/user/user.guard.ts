@@ -31,8 +31,13 @@ export class UserGuard implements CanActivate, CanActivateChild {
   }
 
   checkLogin(url: string) {
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isLoggedIn() && this.authService.getRole() === 2) {
       return true;
+    }
+
+    if (this.authService.isLoggedIn() && this.authService.getRole() != 2) {
+      this.router.navigate(['/forbidden']);
+      return false;
     }
 
     this.authService.redirectUrl = url;

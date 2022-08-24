@@ -51,6 +51,16 @@ export class AuthService {
     return null;
   }
 
+  getLoggedInUser() {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      const currentUser = JSON.parse(user);
+      return currentUser;
+    }
+
+    return null;
+  }
+
   redirectTo() {
     let role = this.getRole();
 
