@@ -44,6 +44,22 @@ export class ManageBlogsComponent implements OnInit {
     this.getBlogs();
   }
 
+  getStatus(blog: Blog) {
+    if (blog.is_active === 1) {
+      return 'Active';
+    }
+
+    if (blog.is_active === 0) {
+      return 'Inactive';
+    }
+
+    if (blog.is_active === 2) {
+      return 'Rejected';
+    }
+
+    return '';
+  }
+
   onDelete(id: number) {
     if (confirm('Are you sure want to delete?')) {
       this.blogService.deleteBlog(+id).subscribe({

@@ -137,7 +137,7 @@ class ApiController extends Controller
             $page = $request->page;
             $limit = $request->limit;
 
-            $posts = Blog::select('id', 'title', 'image', 'created_at')
+            $posts = Blog::with('user:id,name')
                 ->limit($limit)
                 ->offset($limit * ($page - 1))
                 ->orderBy('id', 'DESC')

@@ -9,4 +9,8 @@ export interface Blog {
   is_active: number;
   created_at: Date | null;
   updated_at: Date | null;
+  user?: {
+    id: number;
+    name: string;
+  };
 }

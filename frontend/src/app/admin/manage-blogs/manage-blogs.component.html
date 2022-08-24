@@ -20,7 +20,9 @@
     <th>#ID</th>
     <th>Image</th>
     <th>Title</th>
+    <th>Created By</th>
     <th>Created At</th>
+    <th>Status</th>
     <th>Action</th>
   </tr>
   <tr
@@ -40,7 +42,9 @@
       />
     </td>
     <td>{{ blog.title }}</td>
+    <td>{{ blog.user?.name }}</td>
     <td>{{ blog.created_at | date: "mediumDate" }}</td>
+    <td>{{ getStatus(blog) }}</td>
     <td class="action">
       <a
         [routerLink]="['/admin/blogs/edit', blog.id]"
