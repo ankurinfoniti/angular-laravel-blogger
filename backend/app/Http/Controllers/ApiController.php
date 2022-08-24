@@ -285,7 +285,6 @@ class ApiController extends Controller
             $blog = Blog::find($id);
 
             $blog->title = $title;
-            $blog->user_id = $user->id;
             $blog->category_id = $category;
             $blog->description = $description;
             $blog->is_featured = $is_featured;
