@@ -111,7 +111,15 @@ class ApiController extends Controller
         $username = $request->username;
         $password = $request->password;
 
-        $user = User::where('username', $username)->where('is_active', 1)->first();
+        $user = User::where('username', $username)->first(); // ->where('is_active', 1)
+
+        if ($user && !Hash::check($password, $user->password)) {
+            return ['status' => 'error', 'message' => 'Username or password is incorrect.'];
+        }
+
+        if ($user && !$user->is_active) {
+            return ['status' => 'error', 'message' => 'User is currently inactive.'];
+        }
 
         if ($user && Hash::check($password, $user->password)) {
             $response = array(

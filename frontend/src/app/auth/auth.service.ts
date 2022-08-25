@@ -21,6 +21,7 @@ export class AuthService {
           if (user && user.token) {
             localStorage.setItem('currentUser', JSON.stringify(user));
           }
+          return user;
         }),
         catchError(this.handleError)
       );
