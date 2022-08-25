@@ -8,6 +8,8 @@ import { BlogpostDetailComponent } from './blogpost-detail/blogpost-detail.compo
 import { BlogpostRecentComponent } from './blogpost-recent/blogpost-recent.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { SharedModule } from '../shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BlogVoteComponent } from './blog-vote/blog-vote.component';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,14 @@ import { SharedModule } from '../shared/shared.module';
     BlogpostDetailComponent,
     BlogpostRecentComponent,
     CategoriesComponent,
+    BlogVoteComponent,
   ],
-  imports: [CommonModule, SharedModule, BlogpostRoutingModule],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    SharedModule,
+    BlogpostRoutingModule,
+  ],
   exports: [BlogpostFeaturedComponent],
 })
 export class BlogpostModule {}

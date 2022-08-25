@@ -21,6 +21,7 @@
             />
           </div>
           <div class="blog-desc" [innerHTML]="blog.description"></div>
+          <app-blog-vote [blogId]="blog.id" [vote]="blog.vote"></app-blog-vote>
         </div>
         <div class="blog-left" *ngIf="notFound">
           <app-page-not-found></app-page-not-found>

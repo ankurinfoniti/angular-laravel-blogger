@@ -23,6 +23,14 @@ class Blog extends Model
     }
 
     /**
+     * Get the vote record associated with the blog.
+     */
+    public function vote()
+    {
+        return $this->hasOne('App\Model\BlogVote', 'blog_id', 'id');
+    }
+
+    /**
      * Get the image value with path.
      *
      * @param  string  $value

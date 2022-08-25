@@ -1,3 +1,5 @@
+import { Vote as vote } from "./vote";
+
 export interface Blogpost {
   id: number;
   title: string;
@@ -18,4 +20,5 @@ export interface Blogpost {
     id: number;
     category_name: string;
   };
+  vote: vote
 }

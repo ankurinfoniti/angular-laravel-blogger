@@ -8,6 +8,7 @@ use App\Model\Category;
 use App\Model\Page;
 use App\Model\User;
 use App\Model\Contact;
+use App\Model\BlogVote;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -76,6 +77,7 @@ class ApiController extends Controller
     {
         $blog = Blog::with('user:id,name')
             ->with('category:id,category_name')
+            ->with('vote:id,blog_id,like,dislike')
             ->where('slug', $slug)
             ->first();
 
@@ -658,5 +660,26 @@ class ApiController extends Controller
         }
 
         return $response;
+    }
+
+    public function blogVote(Request $request)
+    {
+        $blogId = $request->blog_id;
+        $actionType = $request->action;
+
+        $blogVote = BlogVote::where('blog_id', $blogId)->first();
+
+        if ($actionType === 'like') {
+            $vote = ['like' => $blogVote ? $blogVote->like + 1 : 1];
+        } else {
+            $vote = ['dislike' => $blogVote ? $blogVote->dislike + 1 : 1];
+        }
+
+        $voted = BlogVote::updateOrCreate(
+            ['blog_id' => $blogId],
+            $vote,
+        );
+
+        return $voted;
     }
 }

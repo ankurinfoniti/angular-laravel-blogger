@@ -1,0 +1,12 @@
+<fa-icon
+  [icon]="faThumbsUp"
+  class="glyphicon glyphicon-thumbs-up"
+  (click)="likes()"
+></fa-icon>
+<span id="like1-bs3"> {{ totalLikes ? totalLikes : "" }} </span>
+<fa-icon
+  [icon]="faThumbsDown"
+  class="glyphicon glyphicon-thumbs-down"
+  (click)="dislike()"
+></fa-icon>
+<span id="dislike1-bs3"> {{ totaldislikes ? totaldislikes : "" }} </span>
