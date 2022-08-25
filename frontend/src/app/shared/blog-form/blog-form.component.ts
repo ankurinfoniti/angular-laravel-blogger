@@ -138,8 +138,10 @@ export class BlogFormComponent implements OnInit, OnDestroy {
             if (res.uploadError) {
               this.uploadError = res.message;
             } else {
-              this.error.errorTitle = 'OOPS! REQUEST FOR DOCUMENT FAILED';
-              this.error.errorDesc = res.message;
+              this.error = {
+                errorTitle: 'OOPS! REQUEST FOR DOCUMENT FAILED',
+                errorDesc: res.message,
+              };
             }
           }
           this.submitted = true;
@@ -157,8 +159,10 @@ export class BlogFormComponent implements OnInit, OnDestroy {
             if (res.uploadError) {
               this.uploadError = res.message;
             } else {
-              this.error.errorTitle = 'OOPS! REQUEST FOR DOCUMENT FAILED';
-              this.error.errorDesc = res.message;
+              this.error = {
+                errorTitle: 'OOPS! REQUEST FOR DOCUMENT FAILED',
+                errorDesc: res.message,
+              };
             }
           }
           this.submitted = true;

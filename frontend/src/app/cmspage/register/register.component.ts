@@ -60,8 +60,10 @@ export class RegisterComponent implements OnInit {
     this.userService.createUser(formData).subscribe({
       next: (res) => {
         if (res.status === 'error') {
-          this.error.errorTitle = 'OOPS! REQUEST FOR DOCUMENT FAILED';
-          this.error.errorDesc = res.message;
+          this.error = {
+            errorTitle: 'OOPS! REQUEST FOR DOCUMENT FAILED',
+            errorDesc: res.message,
+          };
         }
         this.submitted = true;
       },
