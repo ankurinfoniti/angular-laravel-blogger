@@ -173,7 +173,6 @@ export class BlogFormComponent implements OnInit, OnDestroy {
   }
 
   gotoHome() {
-    console.log(this.loginUser);
     if (this.loginUser.role == 1) {
       this.router.navigate(['/admin/blogs']);
     } else {
