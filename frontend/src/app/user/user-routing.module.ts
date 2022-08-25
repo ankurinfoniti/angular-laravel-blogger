@@ -6,7 +6,7 @@ import { UserGuard } from './user.guard';
 import { UserComponent } from './user/user.component';
 import { ManageBlogsComponent } from '../shared/manage-blogs/manage-blogs.component';
 import { BlogFormComponent } from '../shared/blog-form/blog-form.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from '../shared/profile/profile.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 const routes: Routes = [

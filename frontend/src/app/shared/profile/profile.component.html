@@ -1,0 +1,61 @@
+<div class="dash-header">
+  <div class="dash-title">
+    <h1>{{ pageTitle }}</h1>
+  </div>
+</div>
+<div *ngIf="submitted" class="alert alert-success">
+  {{ submitted }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="blog-form">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="form-group form-row">
+      <label class="col-md-3">Name <span class="required">*</span></label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          placeholder="Name"
+          required
+        />
+        <div
+          *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+          class="error"
+        >
+          <div *ngIf="name?.errors">Name is required.</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-md-3">Password</label>
+      <div class="col-md-9">
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          placeholder="Password"
+        />
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <label class="col-md-3"></label>
+      <div class="col-md-9">
+        <button
+          type="submit"
+          [disabled]="!userForm.valid"
+          class="btn btn-primary"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="service-error" *ngIf="error">
+    <h1>{{ error.errorTitle }}</h1>
+    <h3>{{ error.errorDesc }}</h3>
+  </div>
+</div>

@@ -61,6 +61,15 @@ export class AuthService {
     return null;
   }
 
+  updateLoggedInUserName(name: string) {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      const currentUser = JSON.parse(user);
+      currentUser.name = name;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    }
+  }
+
   redirectTo() {
     let role = this.getRole();
 

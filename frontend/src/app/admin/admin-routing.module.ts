@@ -9,6 +9,7 @@ import { ManageBlogsComponent } from '../shared/manage-blogs/manage-blogs.compon
 import { ManageCategoriesComponent } from './manage-categories/manage-categories.component';
 import { ManagePagesComponent } from './manage-pages/manage-pages.component';
 import { BlogFormComponent } from '../shared/blog-form/blog-form.component';
+import { ProfileComponent } from '../shared/profile/profile.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { PageFormComponent } from './page-form/page-form.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
           { path: 'pages/create', component: PageFormComponent },
           { path: 'pages/edit/:id', component: PageFormComponent },
           { path: 'users', component: ManageUsersComponent },
+          { path: 'profile', component: ProfileComponent },
           { path: '', component: AdminDashboardComponent },
         ],
       },

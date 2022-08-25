@@ -9,12 +9,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ManageBlogsComponent } from './manage-blogs/manage-blogs.component';
 import { BlogFormComponent } from './blog-form/blog-form.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     PageNotFoundComponent,
     ManageBlogsComponent,
     BlogFormComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,

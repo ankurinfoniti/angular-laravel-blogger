@@ -44,6 +44,12 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  updateUser(user: any, id: number) {
+    return this.http
+      .post<any>(`${env.BASE_URL}/update-user/${id}`, user)
+      .pipe(catchError(this.handleError));
+  }
+
   deleteUser(id: number) {
     return this.http
       .delete<any>(`${env.BASE_URL}/delete-user/${id}`)

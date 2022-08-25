@@ -50,5 +50,6 @@ Route::post('/create-user', [ApiController::class, 'createUser']);
 Route::get('/admin-users', [ApiController::class, 'adminUsers']);
 Route::post('/activate-user', [ApiController::class, 'activateUser']);
 Route::delete('/delete-user/{id}', [ApiController::class, 'deleteUser']);
+Route::post('/update-user/{id}', [ApiController::class, 'updateUser']);
 
 Route::post('/blog-vote', [ApiController::class, 'blogVote']);

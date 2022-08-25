@@ -115,7 +115,7 @@ class ApiController extends Controller
 
         if ($user && Hash::check($password, $user->password)) {
             $response = array(
-                'user_id' => $user->id,
+                'id' => $user->id,
                 'username' => $user->username,
                 'name' => $user->name,
                 'token' => $user->token,
@@ -623,6 +623,35 @@ class ApiController extends Controller
             $user = User::find($id);
 
             $user->is_active = $status;
+
+            if ($user->save()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record updated successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record updation failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+
+        if ($user && $user->id == $id) {
+            $user = User::find($id);
+
+            $user->name = $request->name;
+
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
+            }
 
             if ($user->save()) {
                 $response['status'] = 'success';
