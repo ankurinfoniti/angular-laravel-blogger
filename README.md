@@ -12,6 +12,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Show static page like as About, Contact etc
 - Create contact form and data send at email
 - Global loader on each api call
+- Social media share icon on blog detail
+- Blog detail page likes and dislikes button
+- User registration page
+- Nested comments on blog detail page
 
 ## Admin Features
 
@@ -33,3 +37,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Admin can view static pages like as About, Contact, etc
 - Blog list page has dynamic server side pagination
 - Blog and page create/edit use ngx-editor and give full-featured text editor
+- Profile page for admin and user
+- Admin can activate and deactivate blog added by user
+- Manage User page
+- User login and dashboard
+- User can add, edit his blog
+- Role based permission
