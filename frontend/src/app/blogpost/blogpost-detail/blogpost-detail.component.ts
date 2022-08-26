@@ -44,4 +44,8 @@ export class BlogpostDetailComponent implements OnInit {
 
     this.titleService.setTitle('Blog Detail');
   }
+
+  getUrl() {
+    return window.location.href;
+  }
 }

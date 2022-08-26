@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+
 import { BlogpostRoutingModule } from './blogpost-routing.module';
 import { BlogpostFeaturedComponent } from './blogpost-featured/blogpost-featured.component';
 import { BlogpostListComponent } from './blogpost-list/blogpost-list.component';
@@ -23,6 +26,8 @@ import { BlogVoteComponent } from './blog-vote/blog-vote.component';
   imports: [
     CommonModule,
     FontAwesomeModule,
+    ShareButtonsModule,
+    ShareIconsModule,
     SharedModule,
     BlogpostRoutingModule,
   ],

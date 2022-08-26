@@ -5,10 +5,20 @@
         <div class="blog-left" *ngIf="blog">
           <h1>{{ blog.title }}</h1>
           <div class="posted-on">
-            <p>
-              by <span>{{ blog.user.name }}</span> on
-              <span>{{ blog.created_at | date: "mediumDate" }}</span>
-            </p>
+            <div class="row">
+              <div class="col-md-6">
+                <p>
+                  by <span>{{ blog.user.name }}</span> on
+                  <span>{{ blog.created_at | date: "mediumDate" }}</span>
+                </p>
+              </div>
+              <div class="col-md-6">
+                <app-blog-vote
+                  [blogId]="blog.id"
+                  [vote]="blog.vote"
+                ></app-blog-vote>
+              </div>
+            </div>
           </div>
           <div class="detail-img">
             <img
@@ -21,7 +31,17 @@
             />
           </div>
           <div class="blog-desc" [innerHTML]="blog.description"></div>
-          <app-blog-vote [blogId]="blog.id" [vote]="blog.vote"></app-blog-vote>
+
+          <share-buttons
+            theme="circles-dark"
+            [include]="['copy', 'twitter', 'facebook', 'linkedin', 'whatsapp']"
+            [showIcon]="true"
+            [showText]="false"
+            [url]="getUrl()"
+            [description]="blog.title"
+            class="pt-5"
+          >
+          </share-buttons>
         </div>
         <div class="blog-left" *ngIf="notFound">
           <app-page-not-found></app-page-not-found>
