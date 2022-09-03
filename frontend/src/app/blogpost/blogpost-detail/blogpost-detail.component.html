@@ -12,7 +12,7 @@
                   <span>{{ blog.created_at | date: "mediumDate" }}</span>
                 </p>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 text-right">
                 <app-blog-vote
                   [blogId]="blog.id"
                   [vote]="blog.vote"
