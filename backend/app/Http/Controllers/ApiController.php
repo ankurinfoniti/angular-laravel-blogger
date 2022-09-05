@@ -9,6 +9,7 @@ use App\Model\Page;
 use App\Model\User;
 use App\Model\Contact;
 use App\Model\BlogVote;
+use App\Model\Comment;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -718,5 +719,74 @@ class ApiController extends Controller
         );
 
         return $voted;
+    }
+
+    public function comments(Request $request)
+    {
+        return Comment::select('id', 'body', 'username', 'user_id as userId', 'parent_id as parentId', 'created_at as createdAt')->get();
+    }
+
+    public function createComment(Request $request)
+    {
+        $comment = new Comment();
+
+        $comment->body = $request->body;
+        $comment->blog_id = $request->blogId;
+        $comment->username = $request->username;
+        $comment->user_id = $request->userId;
+        $comment->parent_id = $request->parentId;
+
+        $comment->save();
+        return Comment::select('id', 'body', 'username', 'user_id as userId', 'parent_id as parentId', 'created_at as createdAt')
+            ->where('id', $comment->id)
+            ->first();
+    }
+
+    public function updateComment(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $comment = Comment::find($id);
+
+        if ($user && $comment && $user->id === $comment->user_id) {
+            $comment->body = $request->body;
+
+            if ($comment->save()) {
+                $response['status'] = 'success';
+                $response['data'] = Comment::select('id', 'body', 'username', 'user_id as userId', 'parent_id as parentId', 'created_at as createdAt')
+                    ->where('id', $comment->id)
+                    ->first();
+            } else {
+                $response['status'] = 'error';
+                $response['data'] = 'Record updation failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['data'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
+    }
+
+    public function deleteComment(Request $request, $id)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $comment = Comment::find($id);
+
+        if ($user && $comment && $user->id === $comment->user_id) {
+            if ($comment->delete()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Record deleted successfully';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Record deletion failed';
+            }
+        } else {
+            $response['status'] = 'error';
+            $response['message'] = 'Unauthorize access. Please try with valid credential.';
+        }
+
+        return $response;
     }
 }

@@ -53,3 +53,8 @@ Route::delete('/delete-user/{id}', [ApiController::class, 'deleteUser']);
 Route::post('/update-user/{id}', [ApiController::class, 'updateUser']);
 
 Route::post('/blog-vote', [ApiController::class, 'blogVote']);
+
+Route::get('/comments', [ApiController::class, 'comments']);
+Route::post('/create-comment', [ApiController::class, 'createComment']);
+Route::post('/update-comment/{id}', [ApiController::class, 'updateComment']);
+Route::delete('/delete-comment/{id}', [ApiController::class, 'deleteComment']);

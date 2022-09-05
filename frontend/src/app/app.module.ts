@@ -10,6 +10,7 @@ import { CmspageModule } from './cmspage/cmspage.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
+import { CommentsModule } from './comments/comments.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -35,6 +36,7 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
     AuthModule,
     AdminModule,
     UserModule,
+    CommentsModule,
     AppRoutingModule,
   ],
   providers: [

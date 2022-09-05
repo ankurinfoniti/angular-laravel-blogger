@@ -42,6 +42,11 @@
             class="pt-5"
           >
           </share-buttons>
+          <app-comments
+            [loginUser]="loginUser"
+            [blog]="blog"
+            *ngIf="loginUser"
+          ></app-comments>
         </div>
         <div class="blog-left" *ngIf="notFound">
           <app-page-not-found></app-page-not-found>
