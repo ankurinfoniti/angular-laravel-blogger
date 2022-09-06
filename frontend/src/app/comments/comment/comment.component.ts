@@ -47,7 +47,6 @@ export class CommentComponent implements OnInit {
       this.currentUserId === Number(this.comment.userId) &&
       this.replies.length === 0 &&
       !timePassed;
-    console.log({ parentId: this.parentId });
     this.replyId = this.parentId ? this.parentId : this.comment.id;
   }
 
