@@ -16,6 +16,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - Blog detail page likes and dislikes button
 - User registration page
 - Nested comments on blog detail page
+- User dashboard
 
 ## Admin Features
 
