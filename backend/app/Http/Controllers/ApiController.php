@@ -810,6 +810,22 @@ class ApiController extends Controller
 
                 $recentBlogs = Blog::select('title', 'image', 'is_active as isActive')->orderBy('id', 'DESC')->limit(5)->get();
                 $recentComments = Comment::select('body', 'username')->orderBy('id', 'DESC')->limit(5)->get();
+            } else {
+                $total['blogTotal'] = Blog::where('user_id', $userId)->count();
+                $ids = Blog::select('id')->where('user_id', $userId)->get();
+                $total['likeTotal'] = BlogVote::whereIn('blog_id', $ids)->sum('like');
+                $total['dislikeTotal'] = BlogVote::whereIn('blog_id', $ids)->sum('dislike');
+
+                $recentBlogs = Blog::select('title', 'image', 'is_active as isActive')
+                    ->where('user_id', $userId)
+                    ->orderBy('id', 'DESC')
+                    ->limit(5)
+                    ->get();
+                $recentComments = Comment::select('body', 'username')
+                    ->whereIn('blog_id', $ids)
+                    ->orderBy('id', 'DESC')
+                    ->limit(5)
+                    ->get();
             }
         }
 
