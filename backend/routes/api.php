@@ -58,3 +58,5 @@ Route::get('/comments', [ApiController::class, 'comments']);
 Route::post('/create-comment', [ApiController::class, 'createComment']);
 Route::post('/update-comment/{id}', [ApiController::class, 'updateComment']);
 Route::delete('/delete-comment/{id}', [ApiController::class, 'deleteComment']);
+
+Route::get('/dashboard-total', [ApiController::class, 'dashboardTotal']);

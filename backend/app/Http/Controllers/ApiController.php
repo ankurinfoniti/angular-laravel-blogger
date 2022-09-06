@@ -789,4 +789,30 @@ class ApiController extends Controller
 
         return $response;
     }
+
+    public function dashboardTotal(Request $request)
+    {
+        $token = $request->header('Authorization');
+        $user = User::where('token', $token)->first();
+        $total = [];
+        $recentBlogs = [];
+        $recentComments = [];
+
+        if ($user) {
+            $role = $user->role;
+            $userId = $user->id;
+
+            if ($role == 1) {
+                $total['blogTotal'] = Blog::count();
+                $total['userTotal'] = User::count();
+                $total['likeTotal'] = BlogVote::count();
+                $total['inactiveTotal'] = Blog::where('is_active', 0)->count();
+
+                $recentBlogs = Blog::select('title', 'image', 'is_active as isActive')->orderBy('id', 'DESC')->limit(5)->get();
+                $recentComments = Comment::select('body', 'username')->orderBy('id', 'DESC')->limit(5)->get();
+            }
+        }
+
+        return ['total' => $total, 'recentBlogs' => $recentBlogs, 'recentComments' => $recentComments];
+    }
 }
